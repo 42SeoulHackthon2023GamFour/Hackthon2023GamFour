@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../../styles/write/write.css"
+import "./write.css"
 
 const Write: React.FC = () => {
   const [title, setTitle] = useState("");

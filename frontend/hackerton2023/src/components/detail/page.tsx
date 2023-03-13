@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
-import "../../styles/detail/detail.css";
+import "./detail.css";
 
 interface Product {
   id: number;
@@ -40,11 +40,14 @@ const productData: Product[] = [
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const product = id ? productData.find((p) => p.id === parseInt(id)) : null;
-
+  const history = useNavigate();
   const [liked, setLiked] = useState<boolean>(false);
 
   const handleLikeClick = () => {
     setLiked(!liked);
+  };
+  const handleGoBack = () => {
+    history('/home');
   };
 
   return (
@@ -61,6 +64,9 @@ const ProductDetail = () => {
       <button className="like-button" onClick={handleLikeClick}>
         {liked ? "Unlike" : "Like"}
       </button>
+      <button className="button" onClick={handleGoBack}>
+          Go Back
+        </button>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
-import "../../styles/home/home.css";
 import { Link } from "react-router-dom";
+import "./home.css";
 
 interface Product {
   id: number;
@@ -43,15 +43,24 @@ const productList: Product[] = [
 
 const Home = () => {
   return (
-    <div className="home">
-      <Link to="/write" className="write-button">
-        Write
-      </Link>
+    <div className="container">
+      <div className="header">
+        <h1>Product List</h1>
+        <Link to="/write" className="button">
+          Write
+        </Link>
+      </div>
       <div className="product-list">
-      {productList.map((product) => (
-          <Link key={product.id} to={`/detail/${product.id}`} className="product">
-            <img src={product.thumbnail} alt={product.name} />
-            <h3>{product.name}</h3>
+        {productList.map((product: Product) => (
+          <Link to={`/detail/${product.id}`} key={product.id}>
+            <div className="product-card">
+              <img
+                className="product-card__image"
+                src={product.thumbnail}
+                alt={product.name}
+              />
+              <h2 className="product-card__title">{product.name}</h2>
+            </div>
           </Link>
         ))}
       </div>
