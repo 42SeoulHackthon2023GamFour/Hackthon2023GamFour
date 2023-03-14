@@ -40,6 +40,7 @@ const productData: Product[] = [
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
+  const [progress, setProgress] = useState(50);
   const product = id ? productData.find((p) => p.id === parseInt(id)) : null;
   const history = useNavigate();
   const [liked, setLiked] = useState<boolean>(false);
@@ -52,6 +53,10 @@ const ProductDetail = () => {
 
   const handleLikeClick = () => {
     setLiked(!liked);
+    if (!liked)
+      setProgress((prevProgress) => prevProgress + 1);
+    if (liked)
+      setProgress((prevProgress) => prevProgress - 1);
   };
   const handleGoBack = () => {
     history("/home");
@@ -63,8 +68,20 @@ const ProductDetail = () => {
         {product ? (
           <div className="description">
             <h1>{text}</h1>
-            <img src={product.imageUrl} alt={product.name} className="product-image" />
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="product-image"
+            />
             <p>{product.description}</p>
+            <div className="product-progress">
+              <div className="progress-bar-container">
+                <div
+                  className="progress-bar"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+            </div>
           </div>
         ) : (
           <p>Product not found.</p>

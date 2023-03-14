@@ -101,7 +101,11 @@ const Home = () => {
       <div className="body">
         <div className="product-list">
           {productList.map((product: Product) => (
-            <Link to={`/detail/${product.id}`} key={product.id} className="detail-link">
+            <Link
+              to={`/detail/${product.id}`}
+              key={product.id}
+              className="detail-link"
+            >
               <div className="product-card">
                 <img
                   className="product-card__image"
@@ -109,13 +113,23 @@ const Home = () => {
                   alt={product.name}
                 />
                 <h2 className="product-card__title">{product.name}</h2>
+                <div className="product-progress">
+                  <div
+                    className="product-progress-bar"
+                    style={{ width: `50%` }}
+                  ></div>
+                </div>
               </div>
             </Link>
           ))}
         </div>
         <div className="product-list2" ref={scrollRef}>
           {productList2.map((product: Product) => (
-            <Link to={`/detail/${product.id}`} key={product.id} className="detail-link">
+            <Link
+              to={`/detail/${product.id}`}
+              key={product.id}
+              className="detail-link"
+            >
               <div className="product-card">
                 <img
                   className="product-card__image"
@@ -123,6 +137,12 @@ const Home = () => {
                   alt={product.name}
                 />
                 <h2 className="product-card__title">{product.name}</h2>
+                <div className="product-progress">
+                  <div
+                    className="product-progress-bar"
+                    style={{ width: `50%` }}
+                  ></div>
+                </div>
               </div>
             </Link>
           ))}

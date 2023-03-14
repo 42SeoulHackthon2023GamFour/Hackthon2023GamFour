@@ -125,3 +125,14 @@
 .detail-link {
   text-Decoration: none; 
 }
+
+.product-progress {
+  height: 4px;
+  background-color: #ddd;
+  margin-top: 8px;
+}
+
+.product-progress-bar {
+  height: 100%;
+  background-color: #000;
+}
