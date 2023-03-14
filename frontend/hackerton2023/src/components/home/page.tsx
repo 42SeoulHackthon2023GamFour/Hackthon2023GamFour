@@ -77,11 +77,14 @@ const productList2: Product[] = [
 
 const Home = () => {
   const [text, setText] = useState("Product List");
+  const [welcome, setWelcome] = useState("Hi, User!");
   const scramblerRef = useRef(new Scrambler());
+  const scramblerRef2 = useRef(new Scrambler());
   useEffect(() => {
     // call scramble function with the text to be scrambled and handler.
     scramblerRef.current.scramble(text, setText);
-    scrollRef.current!.scrollTop = 200;
+    scramblerRef2.current.scramble(welcome, setWelcome);
+    scrollRef.current!.scrollTop = 150;
   }, []);
   const scrollRef = useRef<HTMLDivElement>(null);
   return (
@@ -89,6 +92,7 @@ const Home = () => {
       <div className="header">
         <div className="sub-header">
           <h1>{text}</h1>
+          <p>{welcome}</p>
           <Link to="/write" className="write-button">
             Make Offer
           </Link>
