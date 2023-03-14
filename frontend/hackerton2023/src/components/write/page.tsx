@@ -1,10 +1,12 @@
 import { useState } from "react";
-import "./write.css"
+import { useNavigate } from "react-router-dom";
+import "./write.css";
 
 const Write: React.FC = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [image, setImage] = useState<File | null>(null);
+  const history = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,6 +25,10 @@ const Write: React.FC = () => {
     setImage(e.target.files ? e.target.files[0] : null);
   };
 
+  const handleGoBack = () => {
+    history("/home");
+  };
+
   return (
     <div className="write-container">
       <form className="form" onSubmit={handleSubmit}>
@@ -33,12 +39,15 @@ const Write: React.FC = () => {
           value={title}
           onChange={handleTitleChange}
         />
-        <label htmlFor="body">Body</label>
+        <label htmlFor="body">Description</label>
         <textarea id="body" value={body} onChange={handleBodyChange} />
         <label htmlFor="image">Image</label>
         <input type="file" id="image" onChange={handleImageChange} />
         <button type="submit" className="button">
           Create
+        </button>
+        <button className="button" onClick={handleGoBack}>
+          Back
         </button>
       </form>
     </div>

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Scrambler from "../effects/textScreamble";
 
 import "./detail.css";
 
@@ -42,31 +43,41 @@ const ProductDetail = () => {
   const product = id ? productData.find((p) => p.id === parseInt(id)) : null;
   const history = useNavigate();
   const [liked, setLiked] = useState<boolean>(false);
+  const [text, setText] = useState("Product Title");
+  const scramblerRef = useRef(new Scrambler());
+  useEffect(() => {
+    // call scramble function with the text to be scrambled and handler.
+    scramblerRef.current.scramble(text, setText);
+  }, []);
 
   const handleLikeClick = () => {
     setLiked(!liked);
   };
   const handleGoBack = () => {
-    history('/home');
+    history("/home");
   };
 
   return (
-    <div className="product-detail">
-      {product ? (
-        <>
-          <h1>{product.name}</h1>
-          <img src={product.imageUrl} alt={product.name} />
-          <p>{product.description}</p>
-        </>
-      ) : (
-        <p>Product not found.</p>
-      )}
-      <button className="like-button" onClick={handleLikeClick}>
-        {liked ? "Unlike" : "Like"}
-      </button>
-      <button className="button" onClick={handleGoBack}>
-          Go Back
-        </button>
+    <div className="product-detail-container">
+      <div className="middle-container">
+        {product ? (
+          <div className="description">
+            <h1>{text}</h1>
+            <img src={product.imageUrl} alt={product.name} className="product-image" />
+            <p>{product.description}</p>
+          </div>
+        ) : (
+          <p>Product not found.</p>
+        )}
+        <div className="button-container">
+          <button className="like-button" onClick={handleLikeClick}>
+            {liked ? "UnSign" : "Sign"}
+          </button>
+          <button className="button" onClick={handleGoBack}>
+            Back
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

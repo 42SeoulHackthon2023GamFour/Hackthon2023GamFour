@@ -20,10 +20,6 @@
   align-items: center;
 }
 
-.sub-header h1{
-
-}
-
 .write-button {
   grid-row: 2;
   text-Decoration: none;
@@ -108,7 +104,7 @@
 }
 
 .product-card:hover .product-card__title {
-  color: #ffffff;
+  color: #fff;
 }
 
 .product-card__image {
@@ -123,5 +119,9 @@
   font-size: 1.2rem;
   font-weight: bold;
   color: #333333;
-  transition: color 0.2s ease-in-out;
+  transition: color 0.5s ease-in-out;
+}
+
+.detail-link {
+  text-Decoration: none; 
 }

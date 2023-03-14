@@ -97,7 +97,7 @@ const Home = () => {
       <div className="body">
         <div className="product-list">
           {productList.map((product: Product) => (
-            <Link to={`/detail/${product.id}`} key={product.id}>
+            <Link to={`/detail/${product.id}`} key={product.id} className="detail-link">
               <div className="product-card">
                 <img
                   className="product-card__image"
@@ -111,7 +111,7 @@ const Home = () => {
         </div>
         <div className="product-list2" ref={scrollRef}>
           {productList2.map((product: Product) => (
-            <Link to={`/detail/${product.id}`} key={product.id}>
+            <Link to={`/detail/${product.id}`} key={product.id} className="detail-link">
               <div className="product-card">
                 <img
                   className="product-card__image"
