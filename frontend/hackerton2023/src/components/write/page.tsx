@@ -24,7 +24,7 @@ const Write: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className="write-container">
       <form className="form" onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
         <input
