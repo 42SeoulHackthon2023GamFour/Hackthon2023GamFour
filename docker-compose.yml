@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   react:
@@ -6,7 +6,7 @@ services:
     build: ./frontend/
     container_name: react
     ports:
-      - '4000:4000'
+      - "4000:4000"
     env_file:
       - ./frontend/.env
     volumes:
@@ -18,13 +18,14 @@ services:
   nestjs:
     image: nestjs
     build: ./nestjs
-    container_name: nestjs 
+    container_name: nestjs
     ports:
       - 3000:3000
     networks:
       - hackerton_gam4
     volumes:
       - nestjs:/pwd #volume directroy
+        # - ./:/pwd #volume directroy
     restart: on-failure
     # depends_on:
     #   postgres:
