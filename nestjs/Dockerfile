@@ -2,6 +2,12 @@ FROM node:latest
 
 WORKDIR /pwd
 
-EXPOSE 3000
+RUN apt-get update -y
+RUN npm install -g npm@9
+COPY . .
+RUN npm install
+RUN npm run build
 
-CMD tail -f /dev/null
+EXPOSE 3000
+CMD ["npm", "run", "start"]
+# CMD tail -f /dev/null
