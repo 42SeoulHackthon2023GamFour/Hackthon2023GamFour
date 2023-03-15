@@ -103,10 +103,6 @@
   opacity: 0.7;
 }
 
-.product-card:hover .product-card__title {
-  color: #fff;
-}
-
 .product-card__image {
   width: 150px;
   height: 150px;

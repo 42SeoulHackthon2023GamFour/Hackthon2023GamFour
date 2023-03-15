@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  react:
+    image: react
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - react:/usr/src/app
+    networks:
+      - hackthon2023
+    restart: on-failure
+networks:
+  hackthon2023:
+volumes:
+  react:
+  nestjs:
+  postgres:
