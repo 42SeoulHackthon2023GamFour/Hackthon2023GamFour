@@ -10,7 +10,7 @@ services:
     env_file:
       - ./frontend/.env
     volumes:
-      - react:/usr/src/app
+      - ./frontend:/usr/src/app
     networks:
       - hackerton_gam4
     restart: on-failure
@@ -23,8 +23,10 @@ services:
       - 3000:3000
     networks:
       - hackerton_gam4
+    env_file:
+      - ./nestjs/.env
     volumes:
-      - nestjs:/pwd #volume directroy
+      - ./nestjs:/pwd #volume directroy
         # - ./:/pwd #volume directroy
     restart: on-failure
     # depends_on:
@@ -51,6 +53,6 @@ networks:
     driver: bridge
 
 volumes:
-  react:
-  nestjs:
+  react: 
+  nestjs: 
   postgres:

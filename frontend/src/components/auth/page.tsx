@@ -14,7 +14,7 @@ const Login = () => {
       <h2>{text}</h2>
       <button
         className="oauth-button"
-        onClick={() => (window.location.href = "/home")}
+        onClick={() => (window.location.href = process.env.REACT_APP_LOGIN_URL || "/home")}
       >
         Log in with 42Seoul
       </button>
