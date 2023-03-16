@@ -3,6 +3,8 @@ node_modules/
 dist/
 /.pnp
 .pnp.js
+./frontend/.env
+./nestjs/.env
 
 # testing
 /coverage
