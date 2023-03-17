@@ -22,5 +22,11 @@ yarn-debug.log*
 yarn-error.log*
 
 # dotenv environment variable files
+
+
+#.gitignore
 ./nestjs/.env
-/.env
+.env
+.env.local
+.env.production
+.env.development
