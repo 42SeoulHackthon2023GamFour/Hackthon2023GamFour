@@ -4,10 +4,10 @@ import { Navigate, useSearchParams } from "react-router-dom";
 import Home from "./page";
 
 const HomeIndex = () => {
+  //token Controll
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
   const { token, rtoken } = params;
-  console.log("Index");
   if (token !== undefined && rtoken !== undefined) {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("rtoken");
@@ -20,6 +20,7 @@ const HomeIndex = () => {
     if (token === "undefined" || rtoken === "undefined")
       return <Navigate to="/" replace></Navigate>;
   }
+  //ProductList 
   return <Home />;
 };
 
