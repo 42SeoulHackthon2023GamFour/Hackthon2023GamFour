@@ -152,3 +152,4 @@ export default class Scrambler {
     this.frameId = requestAnimationFrame(() => this.decode());
   }
 }
+

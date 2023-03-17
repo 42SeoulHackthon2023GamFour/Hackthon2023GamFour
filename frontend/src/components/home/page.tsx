@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Scrambler from "../effects/textScreamble";
+import ScramblerComponent from "../effects/Scrambler";
 import "./home.css";
 
 interface Product {
@@ -76,14 +76,7 @@ const productList2: Product[] = [
 ];
 
 const Home = () => {
-  const [text, setText] = useState("Product List");
-  const [welcome, setWelcome] = useState("Hi, User!");
-  const scramblerRef = useRef(new Scrambler());
-  const scramblerRef2 = useRef(new Scrambler());
   useEffect(() => {
-    // call scramble function with the text to be scrambled and handler.
-    scramblerRef.current.scramble(text, setText);
-    scramblerRef2.current.scramble(welcome, setWelcome);
     scrollRef.current!.scrollTop = 150;
   }, []);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -91,8 +84,8 @@ const Home = () => {
     <div className="container">
       <div className="header">
         <div className="sub-header">
-          <h1>{text}</h1>
-          <p>{welcome}</p>
+          <h1><ScramblerComponent text={"Product List"}/></h1>
+          <p><ScramblerComponent text={"Hi, User!"}/></p>
           <Link to="/write" className="write-button">
             Make Offer
           </Link>
