@@ -1,9 +1,18 @@
-import { Product } from "./types";
-import React, { useEffect } from "react";
-import { Navigate, useSearchParams } from "react-router-dom";
+import { Product, ProductLists, genProductListProps } from "./types";
+import React, { useEffect, useCallback, useState } from "react";
+import { Navigate } from "react-router-dom";
 import Home from "./page";
+import genProductList from "./genProductList";
 
 const HomeIndex = () => {
+  //ProductList
+  const [ProductList, setProductList] = useState<ProductLists | null>(null);
+  useEffect(() => {
+    genProductList({
+      ProductList: ProductList,
+      setProductLists: setProductList,
+    });
+  }, []);
   //token Controll
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
@@ -17,11 +26,15 @@ const HomeIndex = () => {
   } else {
     const token = sessionStorage.getItem("token");
     const rtoken = sessionStorage.getItem("rtoken");
-    if (token === "undefined" || rtoken === "undefined")
-      return <Navigate to="/" replace></Navigate>;
+    if (token === "undefined" || rtoken === "undefined" || !token || !rtoken)
+      return <Navigate to="/" replace />;
   }
-  //ProductList 
-  return <Home />;
+  return (
+    <Home
+      ProductList1={ProductList?.ProductList1 ? ProductList?.ProductList1 : []}
+      ProductList2={ProductList?.ProductList2 ? ProductList?.ProductList2 : []}
+    />
+  );
 };
 
 export default HomeIndex;

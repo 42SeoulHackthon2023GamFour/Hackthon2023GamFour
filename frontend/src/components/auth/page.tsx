@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import ScramblerComponent from "../effects/Scrambler";
 import "./login.css";
 
 const Login = () => {
+  const [LoginText, setLoginText] = useState("Log in with 42OAuth");
+  const onClick = () => {
+    setLoginText("Wait a second...");
+    window.location.href = process.env.REACT_APP_LOGIN_URL || "/home";
+  };
+
   return (
     <div className="login-container">
       <h2>
         <ScramblerComponent text={"42FUNDING"} />
       </h2>
-      <button
-        className="oauth-button"
-        onClick={() =>
-          (window.location.href = process.env.REACT_APP_LOGIN_URL || "/home")
-        }
-      >
-        Log in with 42Seoul
+      <button disabled={LoginText === "Wait a second..."}className="oauth-button" onClick={onClick}>
+        {LoginText}
       </button>
     </div>
   );

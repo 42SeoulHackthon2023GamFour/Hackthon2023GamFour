@@ -1,7 +1,8 @@
 import { customAxios } from "./customAxios";
+import { Product } from "../components/home/types";
 
 export const apiRequest = {
-  getProductList: () => customAxios().get("/doc/list"),
+  getProductList: () => customAxios().get<Product[]>("/doc/list"),
   getDetails: (document_id: string) =>
     customAxios().get("/doc/detail/" + document_id),
   postWrite: (title: string, thumbnail: string, description: string) =>
