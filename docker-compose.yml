@@ -24,29 +24,28 @@ services:
     networks:
       - hackerton_gam4
     env_file:
-      - ./nestjs/.env
+      - .env
     volumes:
       - nestjs:/pwd #volume directroy
-        # - ./:/pwd #volume directroy
     restart: on-failure
-    # depends_on:
-    #   postgres:
-    #     condition: service_started
+    depends_on:
+      postgres:
+        condition: service_started
 
-  # postgres:
-  #   image: postgres:latest
-  #   container_name: postgres
-  #   ports:
-  #     - 5432:5432
-  #   environment:
-  #     POSTGRES_USER: ${POSTGRES_USER}
-  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  #     POSTGRES_DB: ${POSTGRES_DB}
-  #   networks:
-  #     - hackerton_gam4
-  #   volumes:
-  #     - postgres:/var/lib/postgresql/data #volume directroy
-  #   restart: on-failure
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - hackerton_gam4
+    volumes:
+      - postgres:/var/lib/postgresql/data #volume directroy
+    restart: on-failure
 
 networks:
   hackerton_gam4:

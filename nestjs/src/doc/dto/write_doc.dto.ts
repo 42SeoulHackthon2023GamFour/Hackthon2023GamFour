@@ -5,7 +5,7 @@ export class WriteDocDto {
 	readonly title: string;
 
 	@IsString()
-	readonly thumnbail: string;
+	readonly thumbnail: string;
 
 	@IsString()
 	readonly description: string;

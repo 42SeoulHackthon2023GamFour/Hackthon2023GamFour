@@ -17,22 +17,22 @@
 		}
 
 		@Get('/detail/:document_id')
-		getDoc(@Param('document_id') documentId: Number) {
+		getDoc(@Param('document_id') documentId: number) {
 			return this.docService.getDoc(documentId);
 		}
 
 		@Put('sign/:document_id')	
-		putSign(@Param('document_id') documentId: Number) {
+		putSign(@Param('document_id') documentId: number) {
 			return this.docService.putSign(documentId);
 		}
 
 		@Put('unsign/:document_id')
-		putUnsign(@Param('document_id') documentId: Number) {
+		putUnsign(@Param('document_id') documentId: number) {
 			return this.docService.putUnsign(documentId);
 		}
 
 		@Delete('delete/:document_id')
-		deleteDoc(@Param('document_id') documentId: Number) {
+		deleteDoc(@Param('document_id') documentId: number) {
 			return this.docService.deleteDoc(documentId);
 		}
 	}
