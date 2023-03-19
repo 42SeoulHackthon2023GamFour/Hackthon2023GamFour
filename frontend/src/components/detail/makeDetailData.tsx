@@ -5,9 +5,13 @@ import { productDetail } from "./types";
 import genProductDetail from "./genProductDetail";
 
 const MakeDetailData = () => {
+  const [isLoad, setIsLoad] = useState<boolean>(false);
   const [productDetail, setProductDetail] = useState<productDetail | null>(
     null
   );
+  const [signed, setSigned] = useState<boolean>(false);
+  const [text, setText] = useState<string>("");
+  const [progress, setProgress] = useState<number>(0);
   const { id } = useParams<{ id: string }>();
   useEffect(() => {
     genProductDetail({
@@ -16,14 +20,28 @@ const MakeDetailData = () => {
       documnet_id: id ? id : "404",
     });
   }, []);
+  useEffect(() => {
+    if (productDetail)
+    {
+      setSigned(productDetail.signed);
+      setText(productDetail.title);
+      setProgress(productDetail.signature_count);
+      setIsLoad(true);
+    }
+  },[productDetail])
+  if (isLoad === false)
+    return <></>
   return <ProductDetail 
-    document_id={productDetail?.document_id ? productDetail?.document_id : 404}
-    title={productDetail?.title ? productDetail.title : "Title"}
-    thumbnail={productDetail?.thumbnail ? productDetail?.thumbnail : "https://via.placeholder.com/150x150"}
-    signature_count={productDetail?.signature_count ? productDetail?.signature_count : 0}
-    description={productDetail?.description ? productDetail?.description : "empty"}
+    document_id={productDetail?.document_id ? productDetail?.document_id : 0}
+    title={text}
+    thumbnail={productDetail?.thumbnail ? productDetail?.thumbnail : ""}
+    signature_count={progress}
+    description={productDetail?.description ? productDetail?.description : ""}
     author_id={productDetail?.author_id ? productDetail?.author_id : "Mr.hong"}
-    signed={productDetail?.signed ? productDetail?.signed : false}
+    signed={signed}
+    setTitle={setText}
+    setProgress={setProgress}
+    setSigned={setSigned}
     />;
 };
 

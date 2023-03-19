@@ -5,27 +5,33 @@ import { productDetail } from "./types";
 import "./detail.css";
 import signChange from "./signChange";
 
-const ProductDetail = (productDetail: productDetail | null) => {
+interface productDetailData {
+    document_id : number,
+    title: string,
+    thumbnail : string,
+    signature_count: number,
+    description : string,
+    author_id : string,
+    signed : boolean,
+    setTitle: React.Dispatch<React.SetStateAction<string>>,
+    setSigned: React.Dispatch<React.SetStateAction<boolean>>,
+    setProgress: React.Dispatch<React.SetStateAction<number>>,
+}
+
+const ProductDetail = (productDetail: productDetailData) => {
   const history = useNavigate();
-  const [signed, setSigned] = useState<boolean>(
-    productDetail?.signed ? productDetail.signed : false
-  );
-  const [text, setText] = useState<string>(productDetail?.title ? productDetail?.title : "Title");
-  const [progress, setProgress] = useState<number>(
-    productDetail?.signature_count ? productDetail?.signature_count : 0
-  );
   const scramblerRef = useRef(new Scrambler());
   useEffect(() => {
-    scramblerRef.current.scramble(text, setText);
+    scramblerRef.current.scramble(productDetail.title, productDetail.setTitle);
   }, []);
 
   const handleLikeClick = () => {
-    setSigned(!signed);
-    if (!signed) setProgress((prevProgress) => prevProgress + 1);
-    if (signed) setProgress((prevProgress) => prevProgress - 1);
+    productDetail.setSigned(!productDetail.signed);
+    if (!productDetail.signed) productDetail.setProgress((prevProgress) => prevProgress + 1);
+    if (productDetail.signed) productDetail.setProgress((prevProgress) => prevProgress - 1);
     signChange(
-      signed,
-      productDetail?.document_id ? productDetail?.document_id : 404
+      productDetail.signed,
+      productDetail.document_id
     );
   };
   const handleGoBack = () => {
@@ -37,7 +43,7 @@ const ProductDetail = (productDetail: productDetail | null) => {
       <div className="middle-container">
         {productDetail ? (
           <div className="description">
-            <h1>{text}</h1>
+            <h1>{productDetail.title}</h1>
             <img
               src={productDetail.thumbnail}
               alt={productDetail.title}
@@ -48,7 +54,7 @@ const ProductDetail = (productDetail: productDetail | null) => {
               <div className="progress-bar-container">
                 <div
                   className="progress-bar"
-                  style={{ width: `${progress}%` }}
+                  style={{ width: `${productDetail.signature_count}%` }}
                 ></div>
               </div>
             </div>
@@ -58,7 +64,7 @@ const ProductDetail = (productDetail: productDetail | null) => {
         )}
         <div className="button-container">
           <button className="like-button" onClick={handleLikeClick}>
-            {signed ? "UnSign" : "Sign"}
+            {productDetail.signed ? "UnSign" : "Sign"}
           </button>
           <button className="button" onClick={handleGoBack}>
             Back

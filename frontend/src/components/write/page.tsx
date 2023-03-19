@@ -13,14 +13,14 @@ const Write: React.FC = () => {
   const history = useNavigate();
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
       const response = await apiRequest.postWrite(title, image, body);
       console.log(response);
-      history("/home");
     } catch (e: any) {
       window.alert("fail to write");
     }
-    e.preventDefault();
+    history("/home");
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
