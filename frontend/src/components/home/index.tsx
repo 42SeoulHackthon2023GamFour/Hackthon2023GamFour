@@ -21,9 +21,11 @@ const HomeIndex = () => {
   if (token !== undefined && rtoken !== undefined) {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("rtoken");
+    sessionStorage.removeItem("username");
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("rtoken", rtoken);
-    // window.history.pushState("", "", "/home");
+    sessionStorage.setItem("username", username);
+    window.history.pushState("", "", "/home");
   } else {
     const token = sessionStorage.getItem("token");
     const rtoken = sessionStorage.getItem("rtoken");
