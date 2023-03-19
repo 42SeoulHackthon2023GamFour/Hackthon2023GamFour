@@ -5,6 +5,7 @@
   grid-template-columns: 1fr 500px 1fr;
   margin-top: 30px;
 }
+
 .middle-container {
   grid-column: 2;
   width:100%;
@@ -29,9 +30,21 @@
 }
 
 .product-description {
-  font-size: 18px;
+  font-size: 17px;
   margin-bottom: 20px;
+  width: 500px;
+  word-wrap: break-word;
+  word-break: break-all;
+  border: none;
+  background-color: #fff;
+  resize: none;
+  -webkit-box-shadow: none !important;
+  box-shadow:none !important;
 }
+.product-description:focus {
+  outline: none;
+}
+
 
 .like-button {
   background-color: #fff;

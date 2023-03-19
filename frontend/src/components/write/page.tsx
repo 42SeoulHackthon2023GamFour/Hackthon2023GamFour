@@ -9,11 +9,17 @@ const Write: React.FC = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const fileRef = useRef<HTMLInputElement | null>(null);
+  const [errorMsg, setErrorMsg] = useState("");
   const [image, setImage] = useState<string>("https://via.placeholder.com/150x150");
   const history = useNavigate();
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (title === "" || body === "")
+    {
+      setErrorMsg(" fill title & Description ");
+      return ;
+    }
     try {
       const response = await apiRequest.postWrite(title, image, body);
       console.log(response);
@@ -77,6 +83,7 @@ const Write: React.FC = () => {
         <label htmlFor="image">Image</label>
         <img src={image} className="product-card__image"></img>
         <input accept={'image/jpg,image/png,image/jpeg'} type="file" id="image" ref={fileRef} onChange={handleImageChange} />
+        {errorMsg ? <p className="errorMsg">{errorMsg}</p> : null}
         <button type="submit" className="button">
           Create
         </button>

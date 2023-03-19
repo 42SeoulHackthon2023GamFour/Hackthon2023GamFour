@@ -30,7 +30,7 @@ const MakeDetailData = () => {
     }
   },[productDetail])
   if (isLoad === false)
-    return <></>
+    return <>Loading...</>
   return <ProductDetail 
     document_id={productDetail?.document_id ? productDetail?.document_id : 0}
     title={text}

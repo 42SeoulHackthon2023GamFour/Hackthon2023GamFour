@@ -16,6 +16,10 @@
   border-radius: 0.5rem;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
 }
+.errorMsg {
+  text-align: center;
+  margin: 3px;
+}
 
 label {
   font-size: 1.2rem;

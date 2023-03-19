@@ -6,16 +6,16 @@ import "./detail.css";
 import signChange from "./signChange";
 
 interface productDetailData {
-    document_id : number,
-    title: string,
-    thumbnail : string,
-    signature_count: number,
-    description : string,
-    author_id : string,
-    signed : boolean,
-    setTitle: React.Dispatch<React.SetStateAction<string>>,
-    setSigned: React.Dispatch<React.SetStateAction<boolean>>,
-    setProgress: React.Dispatch<React.SetStateAction<number>>,
+  document_id: number;
+  title: string;
+  thumbnail: string;
+  signature_count: number;
+  description: string;
+  author_id: string;
+  signed: boolean;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  setSigned: React.Dispatch<React.SetStateAction<boolean>>;
+  setProgress: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ProductDetail = (productDetail: productDetailData) => {
@@ -25,14 +25,20 @@ const ProductDetail = (productDetail: productDetailData) => {
     scramblerRef.current.scramble(productDetail.title, productDetail.setTitle);
   }, []);
 
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  if (textareaRef && textareaRef.current) {
+    textareaRef.current.style.height = "0px";
+    const scrollHeight = textareaRef.current.scrollHeight;
+    textareaRef.current.style.height = scrollHeight + "px";
+  }
+
   const handleLikeClick = () => {
     productDetail.setSigned(!productDetail.signed);
-    if (!productDetail.signed) productDetail.setProgress((prevProgress) => prevProgress + 1);
-    if (productDetail.signed) productDetail.setProgress((prevProgress) => prevProgress - 1);
-    signChange(
-      productDetail.signed,
-      productDetail.document_id
-    );
+    if (!productDetail.signed)
+      productDetail.setProgress((prevProgress) => prevProgress + 1);
+    if (productDetail.signed)
+      productDetail.setProgress((prevProgress) => prevProgress - 1);
+    signChange(productDetail.signed, productDetail.document_id);
   };
   const handleGoBack = () => {
     history("/home");
@@ -49,7 +55,12 @@ const ProductDetail = (productDetail: productDetailData) => {
               alt={productDetail.title}
               className="product-image"
             />
-            <p>{productDetail.description}</p>
+            <textarea
+              ref={textareaRef}
+              className="product-description"
+              value={productDetail.description}
+              disabled={true}
+            />
             <div className="product-progress">
               <div className="progress-bar-container">
                 <div
