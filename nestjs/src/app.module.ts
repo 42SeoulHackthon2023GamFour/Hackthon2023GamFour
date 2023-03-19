@@ -10,9 +10,9 @@ import { PrismaModule } from "./prisma/prisma.module";
 
 @Module({
   // imports: [AuthModule, ConfigModule.forRoot({ isGlobal: true }), DocModule],
-  imports: [DocModule, PrismaModule],
+  imports: [AuthModule, ConfigModule.forRoot({ isGlobal: true }), DocModule, PrismaModule],
   // controllers: [AppController, AuthController],
-  controllers: [AppController],
+  controllers: [AppController, AuthController],
   providers: [AppService],
 })
 
