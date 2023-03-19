@@ -17,7 +17,7 @@ model Document {
   title         String
   create_date   DateTime
   expirate_date DateTime
-  content       String
+  content       String 
   thumbnail     String
 
   signatures    Signature[]
