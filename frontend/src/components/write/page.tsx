@@ -76,6 +76,7 @@ const Write: React.FC = () => {
           type="text"
           id="title"
           value={title}
+          maxLength={20}
           onChange={handleTitleChange}
         />
         <label htmlFor="body">Description</label>
