@@ -11,6 +11,7 @@ const MakeDetailData = () => {
   );
   const [signed, setSigned] = useState<boolean>(false);
   const [text, setText] = useState<string>("");
+  const [isAuthor, setIsAuthor] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
   const { id } = useParams<{ id: string }>();
   useEffect(() => {
@@ -26,9 +27,13 @@ const MakeDetailData = () => {
       setSigned(productDetail.signed);
       setText(productDetail.title);
       setProgress(productDetail.signature_count);
+      setIsAuthor(productDetail.is_auther);
       setIsLoad(true);
     }
   },[productDetail])
+  useEffect(()=>{
+    console.log(isAuthor);
+  },[isAuthor]);
   if (isLoad === false)
     return <>Loading...</>
   return <ProductDetail 
@@ -38,7 +43,7 @@ const MakeDetailData = () => {
     signature_count={progress}
     description={productDetail?.description ? productDetail?.description : ""}
     author_id={productDetail?.author_id ? productDetail?.author_id : "Mr.hong"}
-    is_author={productDetail?.is_author ? productDetail?.is_author : false}
+    is_author={isAuthor}
     signed={signed}
     setTitle={setText}
     setProgress={setProgress}

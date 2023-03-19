@@ -21,7 +21,6 @@ interface productDetailData {
 }
 
 const ProductDetail = (productDetail: productDetailData) => {
-  console.log(productDetail);
   const history = useNavigate();
   const scramblerRef = useRef(new Scrambler());
   useEffect(() => {
@@ -49,6 +48,7 @@ const ProductDetail = (productDetail: productDetailData) => {
 
   const handleDeleteClick = () => {
     docDelete(productDetail.document_id);
+    history("/home");
   }
 
   return (

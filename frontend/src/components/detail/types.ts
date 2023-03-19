@@ -5,6 +5,6 @@ export interface productDetail {
     signature_count: number,
     description : string,
     author_id : string,
+    is_auther : boolean,
     signed : boolean,
-    is_author : boolean,
 }
