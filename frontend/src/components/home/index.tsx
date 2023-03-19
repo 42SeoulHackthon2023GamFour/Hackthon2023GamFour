@@ -16,13 +16,14 @@ const HomeIndex = () => {
   //token Controll
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
-  const { token, rtoken } = params;
+  const { token, rtoken, username, nickname } = params;
+  console.log(username, nickname);
   if (token !== undefined && rtoken !== undefined) {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("rtoken");
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("rtoken", rtoken);
-    window.history.pushState("", "", "/home");
+    // window.history.pushState("", "", "/home");
   } else {
     const token = sessionStorage.getItem("token");
     const rtoken = sessionStorage.getItem("rtoken");
