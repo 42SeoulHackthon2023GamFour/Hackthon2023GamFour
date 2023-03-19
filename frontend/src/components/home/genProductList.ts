@@ -24,8 +24,12 @@ const genProductList = (props: genProductListProps) => {
     if (data) {
       ResponseList = data;
     }
-    ProductList1 = ResponseList;
-    ProductList2 = ResponseList;
+    for (const element of ResponseList) {
+      if (element.signature_count > 50)
+        ProductList1.push(element);
+      else
+        ProductList2.push(element);
+    }
     result = { ProductList1, ProductList2 };
     props.setProductLists(result);
   });
