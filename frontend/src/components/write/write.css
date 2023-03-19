@@ -18,6 +18,7 @@
 }
 .errorMsg {
   text-align: center;
+  color: red;
   margin: 3px;
 }
 
