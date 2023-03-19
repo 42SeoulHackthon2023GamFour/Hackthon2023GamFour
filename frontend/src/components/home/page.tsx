@@ -51,6 +51,11 @@ const Home = (ProductLists: ProductLists | null) => {
   const ProductList2 = ProductLists?.ProductList2
     ? ProductLists?.ProductList2
     : productList;
+    let user:string = "User";
+    const username = sessionStorage.getItem("username");
+    if (username) 
+      user = "Hi, " + username
+      
   useEffect(() => {
     scrollRef.current!.scrollTop = 150;
   }, [ProductList2]);
@@ -63,7 +68,7 @@ const Home = (ProductLists: ProductLists | null) => {
             <ScramblerComponent text={"Product List"} />
           </h1>
           <p>
-            <ScramblerComponent text={"Hi, User!"} />
+            <ScramblerComponent text={user} />
           </p>
           <Link to="/write" className="write-button">
             Make Offer

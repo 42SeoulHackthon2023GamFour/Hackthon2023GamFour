@@ -4,6 +4,7 @@ import Scrambler from "../effects/textScreamble";
 import { productDetail } from "./types";
 import "./detail.css";
 import signChange from "./signChange";
+import docDelete from "./docDelete";
 
 interface productDetailData {
   document_id: number;
@@ -12,6 +13,7 @@ interface productDetailData {
   signature_count: number;
   description: string;
   author_id: string;
+  is_author: boolean;
   signed: boolean;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   setSigned: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,6 +46,10 @@ const ProductDetail = (productDetail: productDetailData) => {
     history("/home");
   };
 
+  const handleDeleteClick = () => {
+    docDelete(productDetail.document_id);
+  }
+
   return (
     <div className="product-detail-container">
       <div className="middle-container">
@@ -74,9 +80,15 @@ const ProductDetail = (productDetail: productDetailData) => {
           <p>Product not found.</p>
         )}
         <div className="button-container">
-          <button className="like-button" onClick={handleLikeClick}>
-            {productDetail.signed ? "UnSign" : "Sign"}
-          </button>
+          { productDetail.is_author ?
+            <button className="like-button" onClick={handleDeleteClick}>
+              Delete
+            </button>
+            :
+            <button className="like-button" onClick={handleLikeClick}>
+              {productDetail.signed ? "UnSign" : "Sign"}
+            </button>
+          }
           <button className="button" onClick={handleGoBack}>
             Back
           </button>

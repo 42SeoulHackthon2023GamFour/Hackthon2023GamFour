@@ -4,26 +4,27 @@ import imageCompression from "browser-image-compression";
 import { apiRequest } from "../../lib/apiRequest";
 import "./write.css";
 
-
 const Write: React.FC = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const fileRef = useRef<HTMLInputElement | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
-  const [image, setImage] = useState<string>("https://via.placeholder.com/150x150");
+  const [image, setImage] = useState<string>(
+    "https://via.placeholder.com/150x150"
+  );
   const history = useNavigate();
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (title === "" || body === "")
-    {
+    if (title === "" || body === "") {
       setErrorMsg(" fill title & Description ");
-      return ;
+      return;
     }
     try {
       const response = await apiRequest.postWrite(title, image, body);
       console.log(response);
     } catch (e: any) {
+      console.log(e);
       window.alert("fail to write");
     }
     history("/home");
@@ -47,26 +48,25 @@ const Write: React.FC = () => {
 
   const actionImgCompress = async (fileSrc: any) => {
     const options = {
-        maxSizeMB: 0.2,
-        maxWidthOrHeight: 500,
-        useWebWorker: true
+      maxSizeMb: 1,
+      maxWidthOrHeight: 500,
+      useWebWorker: true,
     };
     try {
-        const compressedFile = await imageCompression(fileSrc, options);
-        const reader = new FileReader();
-        reader.readAsDataURL(compressedFile);
+      const compressedFile = await imageCompression(fileSrc, options);
+      const reader = new FileReader();
+      reader.readAsDataURL(compressedFile);
 
-        reader.onloadend = () => {
-            const base64data = reader.result;
-            if (base64data) {
-                setImage(base64data.toString());
-            }
-        };
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        if (base64data) {
+          setImage(base64data.toString());
+        }
+      };
     } catch (error: any) {
       window.alert("fail to get Image try again.");
     }
-};
-
+  };
 
   return (
     <div className="write-container">
@@ -82,7 +82,13 @@ const Write: React.FC = () => {
         <textarea id="body" value={body} onChange={handleBodyChange} />
         <label htmlFor="image">Image</label>
         <img src={image} className="product-card__image"></img>
-        <input accept={'image/jpg,image/png,image/jpeg'} type="file" id="image" ref={fileRef} onChange={handleImageChange} />
+        <input
+          accept={"image/jpg,image/png,image/jpeg"}
+          type="file"
+          id="image"
+          ref={fileRef}
+          onChange={handleImageChange}
+        />
         {errorMsg ? <p className="errorMsg">{errorMsg}</p> : null}
         <button type="submit" className="button">
           Create

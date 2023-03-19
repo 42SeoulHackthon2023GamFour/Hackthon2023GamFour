@@ -38,6 +38,7 @@ const MakeDetailData = () => {
     signature_count={progress}
     description={productDetail?.description ? productDetail?.description : ""}
     author_id={productDetail?.author_id ? productDetail?.author_id : "Mr.hong"}
+    is_author={productDetail?.is_author ? productDetail?.is_author : false}
     signed={signed}
     setTitle={setText}
     setProgress={setProgress}
