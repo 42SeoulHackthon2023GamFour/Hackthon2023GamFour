@@ -81,12 +81,12 @@ const ProductDetail = (productDetail: productDetailData) => {
         )}
         <div className="button-container">
           { productDetail.is_author ?
-            <button className="like-button" onClick={handleLikeClick}>
-              {productDetail.signed ? "UnSign" : "Sign"}
-            </button>
-            :
             <button className="like-button" onClick={handleDeleteClick}>
               Delete
+            </button>
+            :
+            <button className="like-button" onClick={handleLikeClick}>
+              {productDetail.signed ? "UnSign" : "Sign"}
             </button>
           }
           <button className="button" onClick={handleGoBack}>
