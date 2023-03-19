@@ -1,10 +1,11 @@
 FROM node:latest
 WORKDIR /usr/src/app
 
- RUN apt-get update -y
- RUN npm install -g npm@9
- COPY . .
- RUN npm install
- EXPOSE 4000
+RUN apt-get update -y
+RUN npm install -g npm@9
+COPY . .
+RUN npm install
+EXPOSE 4000
 
- CMD ["npm", "run", "start"]
+CMD ["npm", "config", "set", "proxy", "http://nestjs:3000"]
+CMD ["npm", "run", "start"]

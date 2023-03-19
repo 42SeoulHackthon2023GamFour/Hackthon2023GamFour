@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import imageCompression from "browser-image-compression";
+import { apiRequest } from "../../lib/apiRequest";
 import "./write.css";
 
 
@@ -11,8 +12,14 @@ const Write: React.FC = () => {
   const [image, setImage] = useState<string>("https://via.placeholder.com/150x150");
   const history = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    console.log(title, body, image);
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      const response = await apiRequest.postWrite(title, image, body);
+      console.log(response);
+      history("/home");
+    } catch (e: any) {
+      window.alert("fail to write");
+    }
     e.preventDefault();
   };
 

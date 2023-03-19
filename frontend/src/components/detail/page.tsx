@@ -1,62 +1,32 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Scrambler from "../effects/textScreamble";
-
+import { productDetail } from "./types";
 import "./detail.css";
+import signChange from "./signChange";
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  imageUrl: string;
-  likes: number;
-}
-
-const productData: Product[] = [
-  {
-    id: 1,
-    name: "Product 1",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    imageUrl: "https://via.placeholder.com/500x300",
-    likes: 10,
-  },
-  {
-    id: 2,
-    name: "Product 2",
-    description:
-      "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-    imageUrl: "https://via.placeholder.com/500x300",
-    likes: 5,
-  },
-  {
-    id: 3,
-    name: "Product 3",
-    description:
-      "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    imageUrl: "https://via.placeholder.com/500x300",
-    likes: 2,
-  },
-];
-
-const ProductDetail = () => {
-  const { id } = useParams<{ id: string }>();
-  const [progress, setProgress] = useState(50);
-  const product = id ? productData.find((p) => p.id === parseInt(id)) : null;
+const ProductDetail = (productDetail: productDetail | null) => {
   const history = useNavigate();
-  const [liked, setLiked] = useState<boolean>(false);
-  const [text, setText] = useState("Product Title");
+  const [signed, setSigned] = useState<boolean>(
+    productDetail?.signed ? productDetail.signed : false
+  );
+  const [text, setText] = useState<string>(productDetail?.title ? productDetail?.title : "Title");
+  const [progress, setProgress] = useState<number>(
+    productDetail?.signature_count ? productDetail?.signature_count : 0
+  );
   const scramblerRef = useRef(new Scrambler());
   useEffect(() => {
-    // call scramble function with the text to be scrambled and handler.
     scramblerRef.current.scramble(text, setText);
   }, []);
 
   const handleLikeClick = () => {
-    setLiked(!liked);
-    if (!liked)
-      setProgress((prevProgress) => prevProgress + 1);
-    if (liked)
-      setProgress((prevProgress) => prevProgress - 1);
+    setSigned(!signed);
+    if (!signed) setProgress((prevProgress) => prevProgress + 1);
+    if (signed) setProgress((prevProgress) => prevProgress - 1);
+    signChange(
+      signed,
+      productDetail?.document_id ? productDetail?.document_id : 404
+    );
   };
   const handleGoBack = () => {
     history("/home");
@@ -65,15 +35,15 @@ const ProductDetail = () => {
   return (
     <div className="product-detail-container">
       <div className="middle-container">
-        {product ? (
+        {productDetail ? (
           <div className="description">
             <h1>{text}</h1>
             <img
-              src={product.imageUrl}
-              alt={product.name}
+              src={productDetail.thumbnail}
+              alt={productDetail.title}
               className="product-image"
             />
-            <p>{product.description}</p>
+            <p>{productDetail.description}</p>
             <div className="product-progress">
               <div className="progress-bar-container">
                 <div
@@ -88,7 +58,7 @@ const ProductDetail = () => {
         )}
         <div className="button-container">
           <button className="like-button" onClick={handleLikeClick}>
-            {liked ? "UnSign" : "Sign"}
+            {signed ? "UnSign" : "Sign"}
           </button>
           <button className="button" onClick={handleGoBack}>
             Back
