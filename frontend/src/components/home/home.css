@@ -51,6 +51,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: flex-start;
 
   word-wrap: break-word;
   word-break: break-all;
@@ -117,6 +118,10 @@
   font-weight: bold;
   color: #333333;
   transition: color 0.5s ease-in-out;
+  white-space:nowrap;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .detail-link {
