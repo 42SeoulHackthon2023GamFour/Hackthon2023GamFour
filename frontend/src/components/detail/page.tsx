@@ -5,6 +5,7 @@ import { productDetail } from "./types";
 import "./detail.css";
 import signChange from "./signChange";
 import docDelete from "./docDelete";
+import { apiRequest } from "../../lib/apiRequest";
 
 interface productDetailData {
   document_id: number;
@@ -26,6 +27,9 @@ const ProductDetail = (productDetail: productDetailData) => {
   useEffect(() => {
     scramblerRef.current.scramble(productDetail.title, productDetail.setTitle);
   }, []);
+
+  const username = sessionStorage.getItem("username");
+  let isAdmin = username === "joupark";
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   if (textareaRef && textareaRef.current) {
@@ -49,7 +53,13 @@ const ProductDetail = (productDetail: productDetailData) => {
   const handleDeleteClick = () => {
     docDelete(productDetail.document_id);
     history("/home");
-  }
+  };
+
+  const adminSign = async () => {
+    for (let i = 0; i < 10; i++)
+      await apiRequest.putDSign(productDetail.document_id + "");
+    history("/home");
+  };
 
   return (
     <div className="product-detail-container">
@@ -81,15 +91,20 @@ const ProductDetail = (productDetail: productDetailData) => {
           <p>Product not found.</p>
         )}
         <div className="button-container">
-          { productDetail.is_author ?
+          {productDetail.is_author ? (
             <button className="like-button" onClick={handleDeleteClick}>
               Delete
             </button>
-            :
+          ) : (
             <button className="like-button" onClick={handleLikeClick}>
               {productDetail.signed ? "UnSign" : "Sign"}
             </button>
-          }
+          )}
+          {isAdmin ? (
+            <button className="button" onClick={adminSign}>
+              AdminSign
+            </button>
+          ) : null}
           <button className="button" onClick={handleGoBack}>
             Back
           </button>

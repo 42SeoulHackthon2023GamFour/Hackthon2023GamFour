@@ -15,6 +15,8 @@ export const apiRequest = {
     customAxios().put("/doc/sign/" + document_id),
   putUnSign: (document_id: string) =>
     customAxios().put("/doc/unsign/" + document_id),
+  putDSign: (document_id: string) =>
+    customAxios().put("/doc/dsign/" + document_id),
   deleteDocument: (document_id: string) =>
     customAxios().delete("/doc/delete/" + document_id),
 };
