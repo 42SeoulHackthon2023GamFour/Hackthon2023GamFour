@@ -4,7 +4,7 @@ export const customAxios = () => {
     const token = sessionStorage.getItem('token');
     const rtoken = sessionStorage.getItem('rtoken');
     const baseAxios: AxiosInstance = axios.create({
-        // baseURL: process.env.REACT_APP_API_URL,
+        // baseURL: process.env.FT_API_URL,
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,

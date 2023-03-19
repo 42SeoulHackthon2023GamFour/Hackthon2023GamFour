@@ -24,11 +24,11 @@ export class AuthController {
         const data = await this.authService.login(user);
         if (!data.accessToken) return;
     
-        const url = new URL(this.config.get<string>('HOST_URL'));
-        url.port = this.config.get<string>('FRONT_PORT');
+        const url = new URL('http://localhost');
+        url.port = this.config.get<string>('FRONTEND_PORT');
         url.searchParams.set('token', data.accessToken);
         url.searchParams.append('rtoken', data.refreshToken);
-        url.pathname = this.config.get<string>('FRONT_LOGIN_URL');
+        url.pathname = 'home';
     
         res.status(302).redirect(url.href);
       }
