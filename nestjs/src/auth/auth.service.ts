@@ -6,6 +6,19 @@ import { ConfigService } from "@nestjs/config";
 @Injectable()
 export class AuthService {
   constructor(private jwtService: JwtService, private config: ConfigService, ) {}
+  
+  verifyJWT(token: string) {
+     console.log(this.config.get<string>('JWT_SECRET'));
+      try {
+        const result = this.jwtService.verify(token, {
+        secret: this.config.get<string>('JWT_SECRET'),
+      });
+        return result;
+      } catch (e) {
+        console.log(e.message);
+      }
+  }
+  
   async genAuthToken(user: FortyTwoUserProfile): Promise<string> {
     return this.jwtService.signAsync(
       {
