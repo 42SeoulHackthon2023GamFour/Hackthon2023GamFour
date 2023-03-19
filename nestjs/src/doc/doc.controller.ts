@@ -35,4 +35,14 @@ export class DocController {
 	deleteDoc(@Param('document_id') documentId: number) {
 		return this.docService.deleteDoc(documentId);
 	}
+
+	@Put('dsign/:document_id')	
+	putDummySign(@Param('document_id') documentId: number) {
+		return this.docService.putDummySign(documentId);
+	}
+
+	@Put('dunsign/:document_id')
+	putDummyUnsign(@Param('document_id') documentId: number) {
+		return this.docService.putDummyUnsign(documentId);
+	}
 }

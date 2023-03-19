@@ -123,4 +123,37 @@ export class DocService {
       },
     })
   }
+
+  async putDummySign(documentId: number) {
+    // assume documentId and signatureData are already defined
+    const document = await this.prisma.document.findUnique({ where: { document_id: documentId }, include: { signatures: true } });
+    if (!document) {
+      throw new NotFoundException(`Document with ID ${documentId} not found`);
+    }
+    // create the new signature object
+    
+    const newSignature = await this.prisma.signature.create({
+      data: {
+        document_id: documentId,
+        user_id: document.signatures.length,
+        user_name: "dummy" + document.signatures.length,
+      },
+    });
+
+    // add the new signature to the document's signatures array
+    document.signatures.push(newSignature);
+  }
+
+  async putDummyUnsign(documentId: number) {
+    const document = await this.prisma.document.findUnique({ where: { document_id: documentId }, include: { signatures: true } });
+    if (!document) {
+      throw new NotFoundException(`Document with ID ${documentId} not found`);
+    }
+    await this.prisma.signature.deleteMany({
+      where: {
+          document_id: documentId,
+          user_id: document.signatures.length - 1,
+      },
+    })
+  }
 }
