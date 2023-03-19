@@ -15,7 +15,7 @@ const ProductCard = ({ productList }: { productList: Product[] }) => {
           <div className="product-card">
             <img
               className="product-card__image"
-              src={"https://via.placeholder.com/150x150"}
+              src={product.thumbnail}
               alt={product.title}
             />
             <h2 className="product-card__title">{product.title}</h2>

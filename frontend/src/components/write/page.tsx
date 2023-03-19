@@ -1,16 +1,26 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import imageCompression from "browser-image-compression";
+import { apiRequest } from "../../lib/apiRequest";
 import "./write.css";
+
 
 const Write: React.FC = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [image, setImage] = useState<File | null>(null);
+  const fileRef = useRef<HTMLInputElement | null>(null);
+  const [image, setImage] = useState<string>("https://via.placeholder.com/150x150");
   const history = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      const response = await apiRequest.postWrite(title, image, body);
+      console.log(response);
+      history("/home");
+    } catch (e: any) {
+      window.alert("fail to write");
+    }
     e.preventDefault();
-    // Send data to server
   };
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,12 +32,35 @@ const Write: React.FC = () => {
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setImage(e.target.files ? e.target.files[0] : null);
+    actionImgCompress(e.target.files ? e.target.files[0] : null);
   };
 
   const handleGoBack = () => {
     history("/home");
   };
+
+  const actionImgCompress = async (fileSrc: any) => {
+    const options = {
+        maxSizeMB: 0.2,
+        maxWidthOrHeight: 500,
+        useWebWorker: true
+    };
+    try {
+        const compressedFile = await imageCompression(fileSrc, options);
+        const reader = new FileReader();
+        reader.readAsDataURL(compressedFile);
+
+        reader.onloadend = () => {
+            const base64data = reader.result;
+            if (base64data) {
+                setImage(base64data.toString());
+            }
+        };
+    } catch (error: any) {
+      window.alert("fail to get Image try again.");
+    }
+};
+
 
   return (
     <div className="write-container">
@@ -42,7 +75,8 @@ const Write: React.FC = () => {
         <label htmlFor="body">Description</label>
         <textarea id="body" value={body} onChange={handleBodyChange} />
         <label htmlFor="image">Image</label>
-        <input type="file" id="image" onChange={handleImageChange} />
+        <img src={image} className="product-card__image"></img>
+        <input accept={'image/jpg,image/png,image/jpeg'} type="file" id="image" ref={fileRef} onChange={handleImageChange} />
         <button type="submit" className="button">
           Create
         </button>

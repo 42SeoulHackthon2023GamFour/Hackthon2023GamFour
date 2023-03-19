@@ -2,11 +2,12 @@
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-columns: 1fr 3.22fr 1fr;
+  grid-template-columns: 1fr 500px 1fr;
   margin-top: 30px;
 }
 .middle-container {
   grid-column: 2;
+  width:100%;
 }
 .description {
   display: grid;
@@ -15,6 +16,8 @@
 }
 .product-image {
   object-fit: contain;
+  width: 500px;
+  height: 300px;
   margin-bottom: 20px;
   border-radius: 10px;
 }
@@ -55,7 +58,7 @@
 .product-progress {
   width: 100%;
   height: 4px;
-  background-color: #ddd;
+  background-color: #fff;
   margin-top: 16px;
 }
 
@@ -68,7 +71,7 @@
   width: 100%;
   height: 12px;
   background-color: #f2f2f2;
-  border-radius: 6px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
