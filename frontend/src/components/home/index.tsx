@@ -16,8 +16,7 @@ const HomeIndex = () => {
   //token Controll
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
-  const { token, rtoken, username, nickname } = params;
-  console.log(username, nickname);
+  const { token, rtoken, username } = params;
   if (token !== undefined && rtoken !== undefined) {
     sessionStorage.removeItem("token");
     sessionStorage.removeItem("rtoken");
