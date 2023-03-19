@@ -6,4 +6,5 @@ export interface productDetail {
     description : string,
     author_id : string,
     signed : boolean,
+    is_author : boolean,
 }
