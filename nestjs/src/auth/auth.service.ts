@@ -6,10 +6,11 @@ import { ConfigService } from "@nestjs/config";
 @Injectable()
 export class AuthService {
   constructor(private jwtService: JwtService, private config: ConfigService, ) {}
-  async genAuthToken(uid: number): Promise<string> {
+  async genAuthToken(user: FortyTwoUserProfile): Promise<string> {
     return this.jwtService.signAsync(
       {
-        sub: uid,
+        uid: user.id,
+        username: user.username,
       },
       {
         secret: this.config.get<string>("JWT_SECRET"),
@@ -18,10 +19,11 @@ export class AuthService {
     );
   }
 
-  async genRefreshToken(uid: number): Promise<string> {
+  async genRefreshToken(user: FortyTwoUserProfile): Promise<string> {
     const token = this.jwtService.sign(
       {
-        sub: uid,
+        uid: user.id,
+        username: user.username,
       },
       {
         secret: this.config.get<string>("JWTREF_SECRET"),
@@ -38,8 +40,8 @@ export class AuthService {
     refreshToken: string;
   }> {
     // this.userService.updateLTT(uid);
-    const token = await this.genAuthToken(user.id);
-    const rtoken = await this.genRefreshToken(user.id);
+    const token = await this.genAuthToken(user);
+    const rtoken = await this.genRefreshToken(user);
     return {
       accessToken: token,
       refreshToken: rtoken,

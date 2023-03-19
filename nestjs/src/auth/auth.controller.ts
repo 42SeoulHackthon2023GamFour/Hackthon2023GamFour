@@ -28,6 +28,8 @@ export class AuthController {
         url.port = this.config.get<string>('FRONTEND_PORT');
         url.searchParams.set('token', data.accessToken);
         url.searchParams.append('rtoken', data.refreshToken);
+        url.searchParams.append('username', user.username);
+        url.searchParams.append('nickname', user.nickname);
         url.pathname = 'home';
     
         res.status(302).redirect(url.href);
