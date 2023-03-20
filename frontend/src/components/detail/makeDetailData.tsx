@@ -42,7 +42,8 @@ const MakeDetailData = () => {
     thumbnail={productDetail?.thumbnail ? productDetail?.thumbnail : ""}
     signature_count={progress}
     description={productDetail?.description ? productDetail?.description : ""}
-    author_id={productDetail?.author_id ? productDetail?.author_id : "Mr.hong"}
+    author_id={productDetail?.author_id ? productDetail?.author_id : 42}
+    author_name={productDetail?.author_name ? productDetail?.author_name : "Mr.hong"}
     is_author={isAuthor}
     signed={signed}
     setTitle={setText}

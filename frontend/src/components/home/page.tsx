@@ -4,6 +4,7 @@ import ScramblerComponent from "../effects/Scrambler";
 import "./home.css";
 import ProductCard from "./productCard";
 import { Product, ProductLists } from "./types";
+import { apiRequest } from "../../lib/apiRequest";
 
 const productList: Product[] = [
   {
@@ -44,20 +45,22 @@ const productList: Product[] = [
   },
 ];
 
-const Home = (ProductLists: ProductLists | null) => {
-  const ProductList1 = ProductLists?.ProductList1
-    ? ProductLists?.ProductList1
-    : productList;
-  const ProductList2 = ProductLists?.ProductList2
-    ? ProductLists?.ProductList2
-    : productList;
-    let user:string = "User";
-    const username = sessionStorage.getItem("username");
-    if (username) 
-      user = "Hi, " + username
-      
+interface HomeDate {
+  username: string | null;
+  ProductList: ProductLists | null;
+}
+
+const Home = (HomeDatas: HomeDate | null) => {
+  let user:string =
+      HomeDatas?.username 
+      ? "Hi, " + HomeDatas?.username
+      : "Hi, User";
+  
+  const ProductList1 = HomeDatas?.ProductList?.ProductList1 ? HomeDatas?.ProductList?.ProductList1 : productList;
+  const ProductList2 = HomeDatas?.ProductList?.ProductList2 ? HomeDatas?.ProductList?.ProductList2 : productList;
+
   useEffect(() => {
-    scrollRef.current!.scrollTop = 150;
+      scrollRef.current!.scrollTop = 150;
   }, [ProductList2]);
   const scrollRef = useRef<HTMLDivElement>(null);
   return (

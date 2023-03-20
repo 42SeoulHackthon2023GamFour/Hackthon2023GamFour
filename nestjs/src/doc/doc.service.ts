@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { AuthService } from "src/auth/auth.service";
+import { UserProfile } from "src/auth/user.interface";
 import { PrismaService } from "src/prisma/prisma.service";
 import { WriteDocDto } from "./dto/write_doc.dto";
 import { DetailDocData, ListDocData } from "./entities/doc.entity"; // maybe delete later
@@ -8,7 +8,6 @@ import { DetailDocData, ListDocData } from "./entities/doc.entity"; // maybe del
 export class DocService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly authService: AuthService,
   ) {}
 
   async getDocList() {
@@ -36,17 +35,15 @@ export class DocService {
     });
   }
 
-  async writeDoc(writeData: WriteDocDto, authHeader: string) {
+  async writeDoc(writeData: WriteDocDto, user: UserProfile) {
     const currentDate = new Date();
     const expireDate = new Date();
     expireDate.setDate(currentDate.getDate() + 30);
 
-    const token = this.authService.verifyJWT(authHeader.split(' ')[1]);
-
     await this.prisma.document.create({
       data: {
-        author_id: token.uid,
-        author_name: token.username,
+        author_id: user.userid,
+        author_name: user.username,
         title: writeData.title,
         create_date: currentDate,
         expirate_date: expireDate,
@@ -56,17 +53,17 @@ export class DocService {
     });
   }
 
-  async getDoc(documentId: number, authHeader: string) {
+  async getDoc(documentId: number, user: UserProfile) {
     const document = await this.prisma.document.findUnique({
       where: { document_id: documentId },
       include: { signatures: true },
     });
-    const token = this.authService.verifyJWT(authHeader.split(' ')[1]);
+
     const signed = await this.prisma.signature.findUnique({
       where: {
         document_id_user_id: {
           document_id: documentId,
-          user_id: token.uid,
+          user_id: user.userid,
         },
       },
     });
@@ -78,27 +75,26 @@ export class DocService {
       signature_count: document.signatures.length,
       description: document.content,
       author_id: document.author_id,
-      is_auther: document.author_id === token.uid, 
+      is_auther: document.author_id === user.userid, 
       signed: !!signed,
     };
 
     return response;
   }
 
-  async putSign(documentId: number, authHeader: string) {
+  async putSign(documentId: number, user: UserProfile) {
     // assume documentId and signatureData are already defined
     const document = await this.prisma.document.findUnique({ where: { document_id: documentId }, include: { signatures: true } });
     if (!document) {
       throw new NotFoundException(`Document with ID ${documentId} not found`);
     }
-    const token = this.authService.verifyJWT(authHeader.split(' ')[1]);
 
     // create the new signature object
     const newSignature = await this.prisma.signature.create({
       data: {
         document_id: documentId,
-        user_id: token.uid,
-        user_name: token.username
+        user_id: user.userid,
+        user_name: user.username,
       },
     });
 
@@ -106,12 +102,11 @@ export class DocService {
     document.signatures.push(newSignature);
   }
 
-  async putUnsign(documentId: number, authHeader: string) {
-    const token = this.authService.verifyJWT(authHeader.split(' ')[1]);
+  async putUnsign(documentId: number, user: UserProfile) {
     await this.prisma.signature.deleteMany({
       where: {
           document_id: documentId,
-          user_id: token.uid,
+          user_id: user.userid,
       },
     })
   }

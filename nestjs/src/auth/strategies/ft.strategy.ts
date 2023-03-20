@@ -1,12 +1,15 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { PassportStrategy } from "@nestjs/passport";
-import { Strategy } from "passport-42";
-import { FortyTwoUserProfile } from "../user.interface";
+import { Strategy, Profile } from "passport-42";
+import { AuthService } from "../auth.service";
 
 @Injectable()
-export class FtStrategy extends PassportStrategy(Strategy) {
-  constructor(private config: ConfigService) {
+export class FtStrategy extends PassportStrategy(Strategy, '42') {
+  constructor(
+    private config: ConfigService,
+    private authService: AuthService,
+  ) {
     super({
       clientID: config.get<string>("FT_API_CID"),
       clientSecret: config.get<string>("FT_API_SEC"),
@@ -14,20 +17,13 @@ export class FtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  validate(accessToken: string, refreshToken: string, profile: any): any {
-    const { id, username, emails } = profile;
-    const valueemail = Object.values(emails)[0];
-    const email = String(valueemail["value"]);
-    const idNumber = +id;
-    let userProfile: FortyTwoUserProfile = {
-      id: idNumber,
-      username: username,
-      nickname: username,
-      email,
-    };
-    if (!userProfile)
-      throw new HttpException("Invalid 42api Token", HttpStatus.UNAUTHORIZED);
-    console.log(accessToken);
-    return userProfile;
+  async validate(
+	  accessToken: string,
+	  refreshToken: string,
+	  profile: Profile,
+  ): Promise<any> {
+	  console.log('accessToken : ', accessToken);	// auto in passport
+	  console.log('refreshToken : ', refreshToken);	// auto in passport
+	  return profile;
   }
 }

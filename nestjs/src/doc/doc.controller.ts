@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Headers, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Headers, Param, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/ftGuard/ft.guard';
 import { DocService } from './doc.service';
 import { WriteDocDto } from './dto/write_doc.dto';
 
 @Controller('doc')
+@UseGuards(JwtGuard)
 export class DocController {
 	constructor(readonly docService: DocService) {}
 
@@ -12,23 +14,23 @@ export class DocController {
 	}
 
 	@Post('write')
-	writeDoc(@Body() writeData: WriteDocDto, @Headers('authorization') authHeader: string) {
-		return this.docService.writeDoc(writeData, authHeader);
+	writeDoc(@Body() writeData: WriteDocDto, @Req() request) {
+		return this.docService.writeDoc(writeData, request.user);
 	}
 
 	@Get('/detail/:document_id')
-	getDoc(@Param('document_id') documentId: number, @Headers('authorization') authHeader: string) {
-		return this.docService.getDoc(documentId, authHeader);
+	getDoc(@Param('document_id') documentId: number, @Req() request) {
+		return this.docService.getDoc(documentId, request.user);
 	}
 
 	@Put('sign/:document_id')	
-	putSign(@Param('document_id') documentId: number, @Headers('authorization') authHeader: string) {
-		return this.docService.putSign(documentId, authHeader);
+	putSign(@Param('document_id') documentId: number, @Req() request) {
+		return this.docService.putSign(documentId, request.user);
 	}
 
 	@Put('unsign/:document_id')
-	putUnsign(@Param('document_id') documentId: number,  @Headers('authorization') authHeader: string) {
-		return this.docService.putUnsign(documentId, authHeader);
+	putUnsign(@Param('document_id') documentId: number,  @Req() request) {
+		return this.docService.putUnsign(documentId, request.user);
 	}
 
 	@Delete('delete/:document_id')

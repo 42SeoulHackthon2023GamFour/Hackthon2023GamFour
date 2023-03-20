@@ -2,6 +2,7 @@ import { customAxios } from "./customAxios";
 import { Product } from "../components/home/types";
 
 export const apiRequest = {
+  getProfile: () => customAxios().get("/auth/ft_profile"),
   getProductList: () => customAxios().get<Product[]>("/doc/list"),
   getDetails: (document_id: string) =>
     customAxios().get("/doc/detail/" + document_id),

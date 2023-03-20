@@ -12,7 +12,8 @@ interface productDetailData {
   thumbnail: string;
   signature_count: number;
   description: string;
-  author_id: string;
+  author_id: number;
+  author_name: string;
   is_author: boolean;
   signed: boolean;
   setTitle: React.Dispatch<React.SetStateAction<string>>;

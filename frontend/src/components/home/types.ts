@@ -10,7 +10,6 @@ export interface ProductLists {
     ProductList2 : Product[]
 }
 
-
 export interface genProductListProps {
     ProductList: ProductLists | null;
     setProductLists: React.Dispatch<React.SetStateAction<ProductLists | null>>;
