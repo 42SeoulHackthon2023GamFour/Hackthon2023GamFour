@@ -2,10 +2,11 @@ import { Product, ProductLists, genProductListProps } from "./types";
 import React, { useEffect, useCallback, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Home from "./page";
-import genProductList from "./genProductList";
+import genProductList, { CallListTwo } from "./genProductList";
 
 const HomeIndex = () => {
   //ProductList
+  console.log(CallListTwo());
   const [ProductList, setProductList] = useState<ProductLists | null>(null);
   useEffect(() => {
     genProductList({

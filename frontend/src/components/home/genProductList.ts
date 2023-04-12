@@ -1,11 +1,22 @@
 import React, { useEffect, useCallback } from "react";
 import { Product, ProductLists } from "./types";
 import { apiRequest } from "../../lib/apiRequest";
+import { useQuery } from "react-query";
+import { AxiosResponse } from "axios";
 
 interface genProductListProps {
   ProductList: ProductLists | null;
   setProductLists: React.Dispatch<React.SetStateAction<ProductLists | null>>;
 }
+
+export const CallListTwo = () => {
+  return useQuery("getProductList", () => apiRequest.getProductList(), {
+    select : (data: AxiosResponse<Product[]>) => {
+      return data.data;
+    },
+    staleTime : 1000 * 20,
+  });
+};
 
 const callList = async () => {
   try {

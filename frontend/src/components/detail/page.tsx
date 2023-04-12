@@ -24,6 +24,9 @@ interface productDetailData {
 const ProductDetail = (productDetail: productDetailData) => {
   const history = useNavigate();
   const scramblerRef = useRef(new Scrambler());
+  const username = sessionStorage.getItem("username");
+  const [isAdmin, setIsAdmin] = useState(false);
+  if (username === "joupark") setIsAdmin(true);
   useEffect(() => {
     scramblerRef.current.scramble(productDetail.title, productDetail.setTitle);
   }, []);
@@ -101,10 +104,19 @@ const ProductDetail = (productDetail: productDetailData) => {
             </button>
           )}
           {isAdmin ? (
+<<<<<<< HEAD
             <button className="button" onClick={adminSign}>
               AdminSign
             </button>
           ) : null}
+=======
+            <button className="button" onClick={admainSign}>
+              admainSign
+            </button>
+          ) : (
+            null
+          )}
+>>>>>>> 33e36ad ([TEST] REACT_QUERY 추가 테스트)
           <button className="button" onClick={handleGoBack}>
             Back
           </button>
