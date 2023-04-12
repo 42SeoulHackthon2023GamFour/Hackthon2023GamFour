@@ -104,19 +104,10 @@ const ProductDetail = (productDetail: productDetailData) => {
             </button>
           )}
           {isAdmin ? (
-<<<<<<< HEAD
             <button className="button" onClick={adminSign}>
               AdminSign
             </button>
           ) : null}
-=======
-            <button className="button" onClick={admainSign}>
-              admainSign
-            </button>
-          ) : (
-            null
-          )}
->>>>>>> 33e36ad ([TEST] REACT_QUERY 추가 테스트)
           <button className="button" onClick={handleGoBack}>
             Back
           </button>
